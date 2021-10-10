@@ -5,6 +5,7 @@ import AddTask from "./AddTask"
 
 export default function App() {
   const [tasks, setTasks] = useState(initialTasks)
+  const [lastId, setLastId] = useState(tasks.length)
 
   // Delete Task
   function deleteTask(id) {
@@ -25,10 +26,16 @@ export default function App() {
     )
   }
 
+  // Add Task
+  function addTask(task) {
+    setLastId(lastId + 1)
+    setTasks([...tasks, { id: lastId + 1, ...task }])
+  }
+
   return (
     <div className="container">
       <Header />
-      <AddTask />
+      <AddTask onAdd={addTask} />
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : (
