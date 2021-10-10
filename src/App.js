@@ -5,14 +5,12 @@ import AddTask from "./AddTask"
 
 export default function App() {
   const [tasks, setTasks] = useState([])
-  const [lastId, setLastId] = useState(0)
   const [showAddTask, setShowAddTask] = useState(false)
 
   useEffect(() => {
     async function getTasks() {
       const tasks = await fetchTasks()
-      setTasks(tasks.data)
-      setLastId(tasks.lastId)
+      setTasks(tasks)
     }
     getTasks()
   }, [])
@@ -44,9 +42,16 @@ export default function App() {
   }
 
   // Add Task
-  function addTask(task) {
-    setLastId(lastId + 1)
-    setTasks([...tasks, { id: lastId + 1, ...task }])
+  async function addTask(task) {
+    const res = await fetch("http://localhost:5000/tasks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(task),
+    })
+    const data = await res.json()
+    setTasks([...tasks, data])
   }
 
   return (
