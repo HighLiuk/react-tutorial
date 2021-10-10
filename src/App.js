@@ -22,23 +22,36 @@ export default function App() {
     return data
   }
 
+  // Fetch Task
+  async function fetchTask(id) {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`)
+    const data = await res.json()
+    return data
+  }
+
   // Delete Task
   function deleteTask(id) {
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
   // Toggle Reminder
-  function toggleReminder(id) {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id
-          ? {
-              ...task,
-              reminder: !task.reminder,
-            }
-          : task
-      )
-    )
+  async function toggleReminder(id) {
+    const taskToToggle = await fetchTask(id)
+    const updatedTask = {
+      ...taskToToggle,
+      reminder: !taskToToggle.reminder,
+    }
+
+    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedTask),
+    })
+    const newTask = await res.json()
+
+    setTasks(tasks.map((task) => (task.id === id ? newTask : task)))
   }
 
   // Add Task
