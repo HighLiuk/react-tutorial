@@ -30,7 +30,10 @@ export default function App() {
   }
 
   // Delete Task
-  function deleteTask(id) {
+  async function deleteTask(id) {
+    await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: "DELETE",
+    })
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
