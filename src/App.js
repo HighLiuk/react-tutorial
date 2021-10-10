@@ -5,15 +5,30 @@ import Tasks from "./Tasks"
 export default function App() {
   const [tasks, setTasks] = useState(initialTasks)
 
+  // Delete Task
   function deleteTask(id) {
     setTasks(tasks.filter((task) => task.id !== id))
+  }
+
+  // Toggle Reminder
+  function toggleReminder(id) {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id
+          ? {
+              ...task,
+              reminder: !task.reminder,
+            }
+          : task
+      )
+    )
   }
 
   return (
     <div className="container">
       <Header />
       {tasks.length > 0 ? (
-        <Tasks tasks={tasks} onDelete={deleteTask} />
+        <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : (
         "No tasks to show"
       )}
