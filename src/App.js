@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Header from "./Header"
 import Tasks from "./Tasks"
 import AddTask from "./AddTask"
+import Footer from "./Footer"
 
 export default function App() {
   const [tasks, setTasks] = useState([])
@@ -83,6 +84,7 @@ export default function App() {
       ) : (
         "No tasks to show"
       )}
+      <Footer />
     </div>
   )
 }
