@@ -1,5 +1,10 @@
 function Task({ task }) {
-  return <h3>{task.text}</h3>
+  return (
+    <div className="task">
+      <h3>{task.text}</h3>
+      <p>{task.day}</p>
+    </div>
+  )
 }
 
 export default Task

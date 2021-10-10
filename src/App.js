@@ -6,7 +6,7 @@ export default function App() {
   const [tasks, setTasks] = useState(initialTasks)
 
   return (
-    <div className="App">
+    <div className="container">
       <Header />
       <Tasks tasks={tasks} />
     </div>
