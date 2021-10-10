@@ -1,12 +1,28 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Header from "./Header"
 import Tasks from "./Tasks"
 import AddTask from "./AddTask"
 
 export default function App() {
-  const [tasks, setTasks] = useState(initialTasks)
-  const [lastId, setLastId] = useState(tasks.length)
+  const [tasks, setTasks] = useState([])
+  const [lastId, setLastId] = useState(0)
   const [showAddTask, setShowAddTask] = useState(false)
+
+  useEffect(() => {
+    async function getTasks() {
+      const tasks = await fetchTasks()
+      setTasks(tasks.data)
+      setLastId(tasks.lastId)
+    }
+    getTasks()
+  }, [])
+
+  // Fetch Tasks
+  async function fetchTasks() {
+    const res = await fetch("http://localhost:5000/tasks")
+    const data = await res.json()
+    return data
+  }
 
   // Delete Task
   function deleteTask(id) {
@@ -49,5 +65,3 @@ export default function App() {
     </div>
   )
 }
-
-const initialTasks = []
