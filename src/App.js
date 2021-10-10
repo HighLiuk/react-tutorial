@@ -1,7 +1,10 @@
+import { useState } from "react"
 import Header from "./Header"
 import Tasks from "./Tasks"
 
 export default function App() {
+  const [tasks, setTasks] = useState(initialTasks)
+
   return (
     <div className="App">
       <Header />
@@ -10,7 +13,7 @@ export default function App() {
   )
 }
 
-const tasks = [
+const initialTasks = [
   {
     id: 1,
     text: "Doctor's Appointment",
